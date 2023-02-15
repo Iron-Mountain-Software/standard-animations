@@ -22,7 +22,7 @@ namespace SpellBoundAR.TransformAnimations
 
         [SerializeField] private bool closeLoop;
         [SerializeField] private bool smooth;
-        [SerializeField] private List<AnimationStep> steps;
+        [SerializeField] private List<AnimationStep> steps = new ();
         
         private RectTransform _rectTransform;
         private int _previousStepIndex;

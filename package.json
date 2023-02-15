@@ -1,6 +1,6 @@
 {
   "name": "com.spellboundar.transform-animations",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "displayName": "Transform Animations",
   "description": "A library for various coded transform animations.",
   "unity": "2019.1",
