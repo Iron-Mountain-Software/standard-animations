@@ -1,0 +1,18 @@
+{
+    "name": "com.spellboundar.transform-animations.Editor",
+    "rootNamespace": "SpellBoundAR.TransformAnimations",
+    "references": [
+        "GUID:cfdb5dee07afd4abbace554e9732848b"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

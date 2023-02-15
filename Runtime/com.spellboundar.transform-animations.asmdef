@@ -1,0 +1,14 @@
+{
+    "name": "com.spellboundar.transform-animations",
+    "rootNamespace": "SpellBoundAR.TransformAnimations",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

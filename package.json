@@ -1,0 +1,21 @@
+{
+  "name": "com.spellboundar.transform-animations",
+  "version": "1.0.0",
+  "displayName": "Transform Animations",
+  "description": "A library for various coded transform animations.",
+  "unity": "2019.1",
+  "keywords": [
+    "tools"
+  ],
+  "author": "Chris Monteferrante <chris@spellboundar.com>",
+  "type": "tool",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SpellBoundAR-Packages/transform-animations.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SpellBoundAR-Packages/transform-animations/issues"
+  },
+  "homepage": "https://github.com/SpellBoundAR-Packages/transform-animations#readme"
+}
