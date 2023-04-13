@@ -44,7 +44,7 @@ namespace SpellBoundAR.TransformAnimations
 
         private void OnEnable() => Reset();
 
-        private void Reset()
+        public void Reset()
         {
             _cycles = 0;
             SetCurrentStep(1);
