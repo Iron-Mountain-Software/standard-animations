@@ -25,6 +25,7 @@ namespace SpellBoundAR.TransformAnimations.Editor
             using (new EditorGUI.DisabledScope(true))
                 EditorGUILayout.ObjectField("Script", MonoScript.FromMonoBehaviour((MonoBehaviour)target), GetType(), false);
             
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("loop"));
             EditorGUILayout.PropertyField(serializedObject.FindProperty("closeLoop"));
             EditorGUILayout.PropertyField(serializedObject.FindProperty("smooth"));
             

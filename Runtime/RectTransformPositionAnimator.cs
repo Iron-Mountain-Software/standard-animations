@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor.U2D;
 using UnityEngine;
 
 namespace SpellBoundAR.TransformAnimations
@@ -20,6 +21,7 @@ namespace SpellBoundAR.TransformAnimations
             public float TravelSeconds => beforeTravelSeconds + duringTravelSeconds + afterTravelSeconds;
         }
 
+        [SerializeField] private bool loop = true;
         [SerializeField] private bool closeLoop;
         [SerializeField] private bool smooth;
         [SerializeField] private List<AnimationStep> steps = new ();
@@ -28,6 +30,7 @@ namespace SpellBoundAR.TransformAnimations
         private int _previousStepIndex;
         private int _currentStepIndex;
         private float _timer;
+        private int _cycles;
         private float _progress;
 
         private RectTransform RectTransform
@@ -41,13 +44,23 @@ namespace SpellBoundAR.TransformAnimations
 
         private void OnEnable() => Reset();
 
-        private void Reset() => SetCurrentStep(1);
+        private void Reset()
+        {
+            _cycles = 0;
+            SetCurrentStep(1);
+        }
 
         private void Update()
         {
             if (steps.Count == 0) return;
-            if (_previousStepIndex < 0 || _previousStepIndex >= steps.Count
-                || _currentStepIndex < 0 || _currentStepIndex >= steps.Count) Reset();
+            if (!loop && _cycles > 0 && (!closeLoop || closeLoop && _currentStepIndex > 0)) return;
+            if (_previousStepIndex < 0
+                || _previousStepIndex >= steps.Count 
+                || _currentStepIndex < 0
+                || _currentStepIndex >= steps.Count)
+            {
+                SetCurrentStep(1);
+            }
             if (_timer < steps[_currentStepIndex].beforeTravelSeconds) _progress = 0;
             else _progress = steps[_currentStepIndex].duringTravelSeconds > 0 
                 ? (_timer - steps[_currentStepIndex].beforeTravelSeconds) / steps[_currentStepIndex].duringTravelSeconds
@@ -75,6 +88,7 @@ namespace SpellBoundAR.TransformAnimations
             }
             else if (index >= steps.Count)
             {
+                _cycles++;
                 if (closeLoop)
                 {
                     _previousStepIndex = steps.Count - 1;
