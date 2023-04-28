@@ -1,5 +1,3 @@
-using System;
-using UnityEditor.U2D;
 using UnityEngine;
 
 namespace SpellBoundAR.TransformAnimations
