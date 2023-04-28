@@ -1,3 +1,5 @@
+using System;
+using UnityEditor.U2D;
 using UnityEngine;
 
 namespace SpellBoundAR.TransformAnimations
@@ -20,11 +22,24 @@ namespace SpellBoundAR.TransformAnimations
         [SerializeField] private Space pivot = Space.Self;
 
         [Header("Cache")]
-        private Quaternion _initialRotation;
+        private Quaternion _initialGlobalRotation;
+        private Quaternion _initialLocalRotation;
         private float _frameMultiplier;
 
-        private void OnEnable() => _initialRotation = transform.rotation;
-        private void OnDisable() => transform.rotation = _initialRotation;
+        private void Awake()
+        {
+            _initialGlobalRotation = transform.rotation;
+            _initialLocalRotation = transform.localRotation;
+        }
+
+        private void Reset()
+        {
+            if (pivot == Space.Self)
+            {
+                transform.localRotation = _initialLocalRotation;
+            }
+            else transform.rotation = _initialGlobalRotation;
+        }
 
         private void Update()
         { 
