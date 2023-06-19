@@ -10,7 +10,8 @@ namespace SpellBoundAR.TransformAnimations
     {
         [SerializeField] private Transform target;
         [SerializeField] private Vector3 rotationAxis = Vector3.right;
-        [SerializeField] private Vector3 centerAxis = (Vector3.up + Vector3.forward).normalized;
+        [SerializeField] private Vector3 centerAxis = Vector3.forward;
+        [SerializeField] private Vector3 upAxis = Vector3.up;
         [SerializeField] private float range = 180f;
 
         [Header("Editor")]
@@ -36,33 +37,24 @@ namespace SpellBoundAR.TransformAnimations
             if (!target) return;
             Vector3 myPosition = _transform.position;
             Vector3 lookVector = target.position - myPosition;
-            Vector3 axis = CalculateRotationAxis();
-            Vector3 center = CalculateCenterAxis();
+            Vector3 axis = CalculateAxis(rotationAxis);
+            Vector3 center = CalculateAxis(centerAxis);
+            Vector3 up = CalculateAxis(upAxis);
             lookVector = Vector3.ProjectOnPlane(lookVector, axis);
             float angle = Vector3.SignedAngle(center, lookVector, axis);
             angle = Mathf.Clamp(angle, -range, range);
             Vector3 result = Quaternion.AngleAxis(angle, axis) * center;
-            _transform.LookAt(myPosition + result, _transform.parent.up);
+            _transform.LookAt(myPosition + result, up);
         }
 
-        private Vector3 CalculateRotationAxis()
+        private Vector3 CalculateAxis(Vector3 transformations)
         {
             Transform parent = _transform ? _transform.parent : null;
             return parent
-                ? (parent.right * rotationAxis.x
-                   + parent.up * rotationAxis.y
-                   + parent.forward * rotationAxis.z).normalized
-                : rotationAxis.normalized;
-        }
-        
-        private Vector3 CalculateCenterAxis()
-        {
-            Transform parent = _transform ? _transform.parent : null;
-            return parent
-                ? (parent.right * centerAxis.x
-                   + parent.up * centerAxis.y
-                   + parent.forward * centerAxis.z).normalized
-                : centerAxis.normalized;
+                ? (parent.right * transformations.x
+                   + parent.up * transformations.y
+                   + parent.forward * transformations.z).normalized
+                : transformations.normalized;
         }
 
 #if UNITY_EDITOR
@@ -71,8 +63,8 @@ namespace SpellBoundAR.TransformAnimations
         {
             Handles.color = color;
             Vector3 myPosition = _transform.position;
-            Vector3 axis = CalculateRotationAxis();
-            Vector3 center = CalculateCenterAxis();
+            Vector3 axis = CalculateAxis(rotationAxis);
+            Vector3 center = CalculateAxis(centerAxis);
             Gizmos.DrawRay(myPosition, axis);
             Handles.DrawSolidArc(myPosition, axis, center, range, radius);
             Handles.DrawSolidArc(myPosition, axis, center, -range, radius);
