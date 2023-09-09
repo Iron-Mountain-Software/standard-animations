@@ -14,7 +14,7 @@ Quickly add simple animations to GameObjects and UI elements.
 
 ---
 
-###Directions for Use:
+### Directions for Use:
 
 All of the key components can be used out-of-the box, and each one is pretty straightforward to set up.
 
@@ -40,7 +40,7 @@ One thing to note, SimpleAnimation is an abstract class with methods Enter() and
    * ​Animate a RectTransform between 2 positions.
 
 
-1. ** RectTransformPositionAnimator**
+1. **RectTransformPositionAnimator**
    * ​Animate a RectTransform between any number of positions.
 
 
@@ -56,6 +56,6 @@ One thing to note, SimpleAnimation is an abstract class with methods Enter() and
    * ​Fluctuate transform scale between max and min values.
 
 
-1. ** ScaleUpAndDownAnimator**
+1. **ScaleUpAndDownAnimator**
    * ​Scale a transform up or down.
 
