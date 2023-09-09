@@ -11,11 +11,11 @@
   "type": "tool",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SpellBoundAR-Packages/transform-animations.git"
+    "url": "https://github.com/Iron-Mountain-Software/standard-animations.git"
   },
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/SpellBoundAR-Packages/transform-animations/issues"
+    "url": "https://github.com/Iron-Mountain-Software/standard-animations/issues"
   },
-  "homepage": "https://github.com/SpellBoundAR-Packages/transform-animations#readme"
+  "homepage": "https://github.com/Iron-Mountain-Software/standard-animations#readme"
 }
