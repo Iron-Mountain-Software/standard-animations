@@ -1,8 +1,8 @@
-using System;
+using IronMountain.StandardAnimations.RectTransforms;
 using UnityEditor;
 using UnityEngine;
 
-namespace SpellBoundAR.TransformAnimations.Editor
+namespace IronMountain.StandardAnimations.Editor.RectTransforms
 {
     [CustomEditor(typeof(RectTransformPositionAnimator))]
     public class RectTransformPositionAnimatorInspector : UnityEditor.Editor

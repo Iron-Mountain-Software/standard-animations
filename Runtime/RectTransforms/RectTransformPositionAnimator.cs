@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace SpellBoundAR.TransformAnimations
+namespace IronMountain.StandardAnimations.RectTransforms
 {
     [DisallowMultipleComponent]
     [RequireComponent(typeof(RectTransform))]

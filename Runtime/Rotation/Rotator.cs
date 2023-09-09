@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace SpellBoundAR.TransformAnimations
+namespace IronMountain.StandardAnimations.Rotation
 {
     public class Rotator : MonoBehaviour
     {

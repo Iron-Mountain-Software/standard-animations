@@ -1,6 +1,6 @@
 {
-    "name": "com.spellboundar.transform-animations.Editor",
-    "rootNamespace": "SpellBoundAR.TransformAnimations",
+    "name": "com.iron-mountain.standard-animations.Editor",
+    "rootNamespace": "IronMountain.StandardAnimations",
     "references": [
         "GUID:cfdb5dee07afd4abbace554e9732848b"
     ],

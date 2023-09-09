@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace SpellBoundAR.TransformAnimations
+namespace IronMountain.StandardAnimations.Scale
 {
     [DisallowMultipleComponent]
     public class ScalePulser : MonoBehaviour

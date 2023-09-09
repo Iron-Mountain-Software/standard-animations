@@ -1,8 +1,8 @@
 {
-  "name": "com.spellboundar.transform-animations",
-  "version": "1.2.1",
-  "displayName": "Transform Animations",
-  "description": "A library for various coded transform animations.",
+  "name": "com.iron-mountain.standard-animations",
+  "version": "1.0.0",
+  "displayName": "Standard Animations",
+  "description": "A library for various coded animations.",
   "unity": "2019.1",
   "keywords": [
     "tools"

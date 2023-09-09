@@ -1,8 +1,8 @@
-using System;
+using IronMountain.StandardAnimations.Scale;
 using UnityEditor;
 using UnityEngine;
 
-namespace SpellBoundAR.TransformAnimations.Editor
+namespace IronMountain.StandardAnimations.Editor.Scale
 {
     [CustomEditor(typeof(ScaleUpAndDownAnimator), true)]
     public class ScaleUpAndDownAnimatorInspector : UnityEditor.Editor

@@ -1,6 +1,6 @@
 {
-    "name": "com.spellboundar.transform-animations",
-    "rootNamespace": "SpellBoundAR.TransformAnimations",
+    "name": "com.iron-mountain.standard-animations",
+    "rootNamespace": "IronMountain.StandardAnimations",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],

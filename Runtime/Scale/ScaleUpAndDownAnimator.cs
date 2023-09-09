@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace SpellBoundAR.TransformAnimations
+namespace IronMountain.StandardAnimations.Scale
 {
     public class ScaleUpAndDownAnimator : MonoBehaviour
     {
