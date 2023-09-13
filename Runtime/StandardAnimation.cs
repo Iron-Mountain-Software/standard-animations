@@ -5,7 +5,7 @@ namespace IronMountain.StandardAnimations
 {
     public abstract class StandardAnimation : MonoBehaviour
     {
-        public float seconds;
+        [SerializeField] protected float seconds = 1f;
         
         public float Seconds => seconds;
 

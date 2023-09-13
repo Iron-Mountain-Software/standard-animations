@@ -18,7 +18,7 @@ Quickly add simple animations to GameObjects and UI elements.
 
 All of the key components can be used out-of-the box, and each one is pretty straightforward to set up.
 
-One thing to note, SimpleAnimation is an abstract class with methods Enter() and Exit(). Drawer, CanvasGroupAnimator, and ScaleAnimator all inherit from SimpleAnimation, and can be grouped together when spawning or destroying GameObjects.
+One thing to note, StandardAnimation is an abstract class with methods Enter(), EnterImmediate(), Exit(), and ExitImmediate(). Drawer, CanvasGroupAnimator, and ScaleAnimator all inherit from StandardAnimation. StandardAnimationGroup is a simple component that can be used to group and control multiple StandardAnimations.
 
 ---
 

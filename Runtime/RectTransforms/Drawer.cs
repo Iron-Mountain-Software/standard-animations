@@ -6,13 +6,11 @@ namespace IronMountain.StandardAnimations.RectTransforms
 {
     [ExecuteAlways]
     [RequireComponent(typeof(RectTransform))]
-    public class Drawer : MonoBehaviour
+    public class Drawer : StandardAnimation
     {
         public event Action OnCurrentTargetChanged;
         public event Action<float> OnMoving;
 
-        [Header("Settings")]
-        [SerializeField] private float seconds = 1f;
         [SerializeField] private Vector2 anchorMinOpen;
         [SerializeField] private Vector2 anchorMaxOpen;
         [SerializeField] private Vector2 anchorMinClosed;
@@ -25,8 +23,6 @@ namespace IronMountain.StandardAnimations.RectTransforms
 
         public float PreviousTarget => _previousTarget;
 
-        public float Seconds => seconds;
-        
         public float CurrentTarget
         {
             get => _currentTarget;
@@ -62,53 +58,90 @@ namespace IronMountain.StandardAnimations.RectTransforms
             this.anchorMaxClosed = anchorMaxClosed;
             return this;
         }
-        
+
+        public override void Enter() =>
+            Open(seconds);
+        public override void Enter(Action onComplete) =>
+            Open(seconds, onComplete);
+        public override void Enter(float animationSeconds, Action onComplete = null) =>
+            Open(animationSeconds, onComplete);
 
         [ContextMenu("Open")]
-        public float Open()
+        public float Open() =>
+            Open(seconds);
+        public float Open(Action onComplete) =>
+            Open(seconds, onComplete);
+        public float Open(float animationSeconds, Action onComplete = null)
         {
             StopAllCoroutines();
             CurrentTarget = 1f;
-            float animationSeconds = CalculateSeconds();
+            animationSeconds = CalculateSeconds(animationSeconds);
             if (animationSeconds <= 0) SnapToTarget();
-            else StartCoroutine(Animate(animationSeconds));
+            else StartCoroutine(Animate(animationSeconds, onComplete));
             return animationSeconds;
         }
+
+        public override void EnterImmediate() =>
+            OpenImmediate();
+        public override void EnterImmediate(Action onComplete) =>
+            OpenImmediate(onComplete);
         
         [ContextMenu("Open Immediate")]
-        public void OpenImmediate()
+        public void OpenImmediate() =>
+            OpenImmediate(null);
+        public void OpenImmediate(Action onComplete)
         {
             StopAllCoroutines();
             CurrentTarget = 1f;
             SnapToTarget();
+            onComplete?.Invoke();
         }
-        
+
+        public override void Exit() =>
+            Close(seconds);
+        public override void Exit(Action onComplete) =>
+            Close(seconds, onComplete);
+        public override void Exit(float animationSeconds, Action onComplete = null) =>
+            Close(animationSeconds, onComplete);
+
         [ContextMenu("Close")]
-        public float Close()
+        public float Close() =>
+            Close(seconds);
+        public float Close(Action onComplete) =>
+            Close(seconds, onComplete);
+        public float Close(float animationSeconds, Action onComplete = null)
         {
             StopAllCoroutines();
             CurrentTarget = 0f;
-            float animationSeconds = CalculateSeconds();
+            animationSeconds = CalculateSeconds(animationSeconds);
             if (animationSeconds <= 0) SnapToTarget();
-            else StartCoroutine(Animate(animationSeconds));
+            else StartCoroutine(Animate(animationSeconds, onComplete));
             return animationSeconds;
         }
+
+        public override void ExitImmediate() =>
+            CloseImmediate();
+        public override void ExitImmediate(Action onComplete) =>
+            CloseImmediate(onComplete);
         
         [ContextMenu("Close Immediate")]
-        public void CloseImmediate()
+        public void CloseImmediate() =>
+            CloseImmediate(null);
+        public void CloseImmediate(Action onComplete)
         {
             StopAllCoroutines();
             CurrentTarget = 0f;
             SnapToTarget();
+            onComplete?.Invoke();
         }
         
-        public float SetTarget(float target)
+        public float SetTarget(float target, Action onComplete = null)
         {
             StopAllCoroutines();
             CurrentTarget = target;
-            float animationSeconds = CalculateSeconds();
+            float animationSeconds = CalculateSeconds(seconds);
             if (animationSeconds <= 0) SnapToTarget();
-            else StartCoroutine(Animate(animationSeconds));
+            else StartCoroutine(Animate(animationSeconds, onComplete));
             return animationSeconds;
         }
         
@@ -127,7 +160,7 @@ namespace IronMountain.StandardAnimations.RectTransforms
             RectTransform.offsetMax = Vector2.zero;
         }
 
-        private float CalculateSeconds()
+        private float CalculateSeconds(float animationSeconds)
         {
             if (!gameObject.activeInHierarchy) return 0;
             Vector2 startAnchorMin = RectTransform.anchorMin;
@@ -140,10 +173,10 @@ namespace IronMountain.StandardAnimations.RectTransforms
             float currentMinDistance = Vector2.Distance(startAnchorMin, targetAnchorMin);
             float currentMaxDistance = Vector2.Distance(startAnchorMax, targetAnchorMax);
             float currentDistance = (currentMinDistance + currentMaxDistance) / 2f;
-            return (seconds / baseDistance) * currentDistance;
+            return (animationSeconds / baseDistance) * currentDistance;
         }
 
-        private IEnumerator Animate(float animationSeconds)
+        private IEnumerator Animate(float animationSeconds, Action onComplete)
         {
             OnMoving?.Invoke(animationSeconds);
             Vector2 startAnchorMin = RectTransform.anchorMin;
@@ -161,6 +194,7 @@ namespace IronMountain.StandardAnimations.RectTransforms
                 yield return null;
             }
             SnapToTarget();
+            onComplete?.Invoke();
         }
     }
 }
