@@ -1,13 +1,13 @@
 {
   "name": "com.iron-mountain.standard-animations",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "displayName": "Standard Animations",
   "description": "A library for various coded animations.",
   "unity": "2019.1",
   "keywords": [
     "tools"
   ],
-  "author": "Chris Monteferrante <chris@spellboundar.com>",
+  "author": "Chris Monteferrante <ludachrismonte@gmail.com>",
   "type": "tool",
   "repository": {
     "type": "git",

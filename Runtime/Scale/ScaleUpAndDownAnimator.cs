@@ -18,9 +18,9 @@ namespace IronMountain.StandardAnimations.Scale
         
         [ContextMenu("Scale Up")]
         public void ScaleUp() =>
-            ScaleDown(seconds);
+            ScaleUp(seconds);
         public void ScaleUp(Action onComplete) =>
-            ScaleDown(seconds, onComplete); 
+            ScaleUp(seconds, onComplete); 
         public void ScaleUp(float animationSeconds, Action onComplete = null)
         {
             StopAllCoroutines();
@@ -77,10 +77,11 @@ namespace IronMountain.StandardAnimations.Scale
 
         private IEnumerator AnimationRunner(Vector3 startScale, Vector3 endScale, float duration, Action onComplete)
         {
+            Vector3 currentLocalScale = transform.localScale;
             float progress = Mathf.Min(
-                Mathf.InverseLerp(startScale.x, endScale.x, transform.localScale.x),
-                Mathf.InverseLerp(startScale.y, endScale.y, transform.localScale.y),
-                Mathf.InverseLerp(startScale.z, endScale.z, transform.localScale.z));
+                Mathf.InverseLerp(startScale.x, endScale.x, currentLocalScale.x),
+                Mathf.InverseLerp(startScale.y, endScale.y, currentLocalScale.y),
+                Mathf.InverseLerp(startScale.z, endScale.z, currentLocalScale.z));
             for (float timer = progress * duration; timer < duration; timer += Time.deltaTime)
             {
                 progress = timer / duration;
@@ -90,7 +91,5 @@ namespace IronMountain.StandardAnimations.Scale
             transform.localScale = endScale;
             onComplete?.Invoke();
         }
-
-        
     }
 }
