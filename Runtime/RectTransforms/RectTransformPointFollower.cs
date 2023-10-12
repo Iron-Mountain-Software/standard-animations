@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace ARISE.Utilities.UI.UIFollow
+namespace IronMountain.StandardAnimations.RectTransforms
 {
     [ExecuteAlways]
     [DisallowMultipleComponent]
