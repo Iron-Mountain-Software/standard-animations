@@ -51,8 +51,8 @@ namespace IronMountain.StandardAnimations.RectTransforms
                     targetPosition.x + offset.x + padding.Right * .5f - padding.Left * .5f,
                     targetPosition.y + offset.y + padding.Top * .5f - padding.Bottom * .5f,
                     targetPosition.z + offset.z);
-            RectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, (target.sizeDelta.x * targetLocalScale.x + padding.Left + padding.Right));
-            RectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, (target.sizeDelta.y * targetLocalScale.y + padding.Top + padding.Bottom));
+            RectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, (target.rect.width * targetLocalScale.x + padding.Left + padding.Right));
+            RectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, (target.rect.height * targetLocalScale.y + padding.Top + padding.Bottom));
         }
     }
 }
