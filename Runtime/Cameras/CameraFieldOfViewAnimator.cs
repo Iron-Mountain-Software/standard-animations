@@ -1,28 +1,19 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
 namespace IronMountain.StandardAnimations.Cameras
 {
-    [RequireComponent(typeof(Camera))]
     public class CameraFieldOfViewAnimator : MonoBehaviour
     {
-        [SerializeField] private Camera camera;
+        [SerializeField] private Camera[] cameras;
         [SerializeField] protected float seconds = 1f;
         [SerializeField] [Range(0, 179)] private float zoomedOutFieldOfView = 70;
         [SerializeField] [Range(0, 179)] private float zoomedInFieldOfView = 50;
 
         public float Seconds => seconds;
-
-        private void OnEnable()
-        {
-            if (!camera) camera = GetComponent<Camera>();
-        }
-
-        private void OnValidate()
-        {
-            if (!camera) camera = GetComponent<Camera>();
-        }
 
         [ContextMenu("Zoom In")]
         public void ZoomIn() =>
@@ -41,7 +32,7 @@ namespace IronMountain.StandardAnimations.Cameras
         public void ZoomInImmediate(Action onComplete)
         {
             StopAllCoroutines();
-            if (camera) camera.fieldOfView = zoomedInFieldOfView;
+            ApplyFieldOfView(zoomedInFieldOfView);
             onComplete?.Invoke();
         }
         
@@ -62,22 +53,30 @@ namespace IronMountain.StandardAnimations.Cameras
         public void ZoomOutImmediate(Action onComplete)
         {
             StopAllCoroutines();
-            if (camera) camera.fieldOfView = zoomedOutFieldOfView;
+            ApplyFieldOfView(zoomedOutFieldOfView);
             onComplete?.Invoke();
         }
 
         private IEnumerator AnimationRunner(float startFieldOfView, float endFieldOfView, float duration, Action onComplete)
         {
-            float currentFieldOfView = camera ? camera.fieldOfView : 0;
+            float currentFieldOfView = cameras.Length > 0 && cameras[0] ? cameras[0].fieldOfView : 0;
             float progress = Mathf.InverseLerp(startFieldOfView, endFieldOfView, currentFieldOfView);
             for (float timer = progress * duration; timer < duration; timer += Time.deltaTime)
             {
                 progress = Mathf.SmoothStep(0, 1, timer / duration);
-                if (camera) camera.fieldOfView = Mathf.Lerp(startFieldOfView, endFieldOfView, progress);
+                ApplyFieldOfView(Mathf.Lerp(startFieldOfView, endFieldOfView, progress));
                 yield return null;
             }
-            if (camera) camera.fieldOfView = endFieldOfView;
+            ApplyFieldOfView(endFieldOfView);
             onComplete?.Invoke();
+        }
+
+        private void ApplyFieldOfView(float fieldOfView)
+        {
+            foreach (Camera camera in cameras)
+            {
+                if (camera) camera.fieldOfView = fieldOfView;
+            }
         }
     }
 }
