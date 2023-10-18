@@ -1,8 +1,12 @@
 {
   "name": "com.iron-mountain.standard-animations",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "displayName": "Standard Animations",
   "description": "A library for various coded animations.",
+  "useCases": [
+    "Quickly add simple animations to GameObjects and UI elements."
+  ],
+  "directions": "All of the key components can be used out-of-the box, and each one is pretty straightforward to set up. One thing to note, StandardAnimation is an abstract class with methods Enter(), EnterImmediate(), Exit(), and ExitImmediate(). Drawer, CanvasGroupAnimator, and ScaleAnimator all inherit from StandardAnimation. StandardAnimationGroup is a simple component that can be used to group and control multiple StandardAnimations.",
   "unity": "2019.1",
   "keywords": [
     "tools"
@@ -13,6 +17,20 @@
     "type": "git",
     "url": "https://github.com/Iron-Mountain-Software/standard-animations.git"
   },
+  "sources": [
+    {
+      "type": "git",
+      "url": "https://github.com/Iron-Mountain-Software/standard-animations.git"
+    },
+    {
+      "type": "npm",
+      "url": "https://www.npmjs.com/package/com.iron-mountain.standard-animations"
+    },
+    {
+      "type": "itch.io",
+      "url": "https://iron-mountain.itch.io/standard-animations"
+    }
+  ],
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Iron-Mountain-Software/standard-animations/issues"
