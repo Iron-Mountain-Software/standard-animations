@@ -76,7 +76,7 @@ namespace IronMountain.StandardAnimations.RectTransforms
             StopAllCoroutines();
             CurrentTarget = 1f;
             animationSeconds = CalculateSeconds(animationSeconds);
-            if (animationSeconds <= 0) SnapToTarget();
+            if (animationSeconds <= 0 || !isActiveAndEnabled) SnapToTarget();
             else StartCoroutine(Animate(animationSeconds, onComplete));
             return animationSeconds;
         }
@@ -114,7 +114,7 @@ namespace IronMountain.StandardAnimations.RectTransforms
             StopAllCoroutines();
             CurrentTarget = 0f;
             animationSeconds = CalculateSeconds(animationSeconds);
-            if (animationSeconds <= 0) SnapToTarget();
+            if (animationSeconds <= 0 || !isActiveAndEnabled) SnapToTarget();
             else StartCoroutine(Animate(animationSeconds, onComplete));
             return animationSeconds;
         }
@@ -140,7 +140,7 @@ namespace IronMountain.StandardAnimations.RectTransforms
             StopAllCoroutines();
             CurrentTarget = target;
             float animationSeconds = CalculateSeconds(seconds);
-            if (animationSeconds <= 0) SnapToTarget();
+            if (animationSeconds <= 0 || !isActiveAndEnabled) SnapToTarget();
             else StartCoroutine(Animate(animationSeconds, onComplete));
             return animationSeconds;
         }

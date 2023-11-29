@@ -38,7 +38,8 @@ namespace IronMountain.StandardAnimations.CanvasGroups
         public void FadeIn(float animationSeconds, Action onComplete = null)
         {
             StopAllCoroutines();
-            StartCoroutine(Animate(alphaMinimum, alphaMaximum, animationSeconds, onComplete));
+            if (!isActiveAndEnabled) FadeInImmediate(onComplete);
+            else StartCoroutine(Animate(alphaMinimum, alphaMaximum, animationSeconds, onComplete));
         }
 
         public override void EnterImmediate() =>
@@ -71,7 +72,8 @@ namespace IronMountain.StandardAnimations.CanvasGroups
         public void FadeOut(float animationSeconds, Action onComplete = null)
         {
             StopAllCoroutines();
-            StartCoroutine(Animate(alphaMaximum, alphaMinimum, seconds, onComplete));
+            if (!isActiveAndEnabled) FadeOutImmediate(onComplete);
+            else StartCoroutine(Animate(alphaMaximum, alphaMinimum, animationSeconds, onComplete));
         }
 
         public override void ExitImmediate() =>

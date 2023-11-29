@@ -24,7 +24,8 @@ namespace IronMountain.StandardAnimations.Scale
         public void ScaleUp(float animationSeconds, Action onComplete = null)
         {
             StopAllCoroutines();
-            StartCoroutine(AnimationRunner(minimumScale, maximumScale, animationSeconds, onComplete));
+            if (!isActiveAndEnabled) ScaleUpImmediate(onComplete);
+            else StartCoroutine(AnimationRunner(minimumScale, maximumScale, animationSeconds, onComplete));
         }
 
         public override void EnterImmediate() =>
@@ -57,7 +58,8 @@ namespace IronMountain.StandardAnimations.Scale
         public void ScaleDown(float animationSeconds, Action onComplete = null)
         {
             StopAllCoroutines();
-            StartCoroutine(AnimationRunner(maximumScale, minimumScale, animationSeconds, onComplete));
+            if (!isActiveAndEnabled) ScaleDownImmediate(onComplete);
+            else StartCoroutine(AnimationRunner(maximumScale, minimumScale, animationSeconds, onComplete));
         }
 
         public override void ExitImmediate() =>
