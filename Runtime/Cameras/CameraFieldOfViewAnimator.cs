@@ -12,6 +12,22 @@ namespace IronMountain.StandardAnimations.Cameras
         [SerializeField] [Range(0, 179)] private float zoomedInFieldOfView = 50;
 
         public float Seconds => seconds;
+        public float ZoomedOutFieldOfView => zoomedOutFieldOfView;
+        public float ZoomedInFieldOfView => zoomedInFieldOfView;
+
+        public float CurrentFieldOfView
+        {
+            get => cameras.Length > 0 && cameras[0] 
+                ? cameras[0].fieldOfView 
+                : 0;
+            private set
+            {
+                foreach (Camera camera in cameras)
+                {
+                    if (camera) camera.fieldOfView = value;
+                }
+            }
+        }
 
         [ContextMenu("Zoom In")]
         public void ZoomIn() =>
@@ -30,7 +46,7 @@ namespace IronMountain.StandardAnimations.Cameras
         public void ZoomInImmediate(Action onComplete)
         {
             StopAllCoroutines();
-            ApplyFieldOfView(zoomedInFieldOfView);
+            CurrentFieldOfView = zoomedInFieldOfView;
             onComplete?.Invoke();
         }
         
@@ -51,30 +67,40 @@ namespace IronMountain.StandardAnimations.Cameras
         public void ZoomOutImmediate(Action onComplete)
         {
             StopAllCoroutines();
-            ApplyFieldOfView(zoomedOutFieldOfView);
+            CurrentFieldOfView = zoomedOutFieldOfView;
+            onComplete?.Invoke();
+        }
+        
+        public void ZoomTo(float fieldOfView) =>
+            ZoomTo(fieldOfView, seconds);
+        public void ZoomTo(float fieldOfView, Action onComplete) =>
+            ZoomTo(fieldOfView, seconds, onComplete); 
+        public void ZoomTo(float fieldOfView, float animationSeconds, Action onComplete = null)
+        {
+            StopAllCoroutines();
+            StartCoroutine(AnimationRunner(CurrentFieldOfView, fieldOfView, animationSeconds, onComplete));
+        }
+
+        public void ZoomToImmediate(float fieldOfView) =>
+            ZoomToImmediate(fieldOfView, null);
+        public void ZoomToImmediate(float fieldOfView, Action onComplete)
+        {
+            StopAllCoroutines();
+            CurrentFieldOfView = fieldOfView;
             onComplete?.Invoke();
         }
 
         private IEnumerator AnimationRunner(float startFieldOfView, float endFieldOfView, float duration, Action onComplete)
         {
-            float currentFieldOfView = cameras.Length > 0 && cameras[0] ? cameras[0].fieldOfView : 0;
-            float progress = Mathf.InverseLerp(startFieldOfView, endFieldOfView, currentFieldOfView);
+            float progress = Mathf.InverseLerp(startFieldOfView, endFieldOfView, CurrentFieldOfView);
             for (float timer = progress * duration; timer < duration; timer += Time.deltaTime)
             {
                 progress = Mathf.SmoothStep(0, 1, timer / duration);
-                ApplyFieldOfView(Mathf.Lerp(startFieldOfView, endFieldOfView, progress));
+                CurrentFieldOfView = Mathf.Lerp(startFieldOfView, endFieldOfView, progress);
                 yield return null;
             }
-            ApplyFieldOfView(endFieldOfView);
+            CurrentFieldOfView = endFieldOfView;
             onComplete?.Invoke();
-        }
-
-        private void ApplyFieldOfView(float fieldOfView)
-        {
-            foreach (Camera camera in cameras)
-            {
-                if (camera) camera.fieldOfView = fieldOfView;
-            }
         }
     }
 }
