@@ -1,5 +1,5 @@
 # Standard Animations
-*Version: 1.2.5*
+*Version: 1.2.6*
 ## Description: 
 A library for various coded animations.
 ## Use Cases: 
@@ -123,6 +123,8 @@ All of the key components can be used out-of-the box, and each one is pretty str
       * public GameObject ***BackSide***  { get; }
    * Methods: 
       * public void ***Flip***()
+      * public void ***FlipToFront***()
+      * public void ***FlipToBack***()
 1. public struct **Padding**
    * Properties: 
       * public float ***Top***  { get; }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
@@ -32,11 +33,29 @@ namespace IronMountain.StandardAnimations.RectTransforms
         {
             if (frontSide) frontSide.SetActive(true);
             if (backSide) backSide.SetActive(false);
+            _flipCoroutine = null;
+        }
+
+        private void OnDisable()
+        {
+            _flipCoroutine = null;
         }
 
         [ContextMenu("Flip")]
         public void Flip()
         {
+            _flipCoroutine ??= StartCoroutine(FlipRunner());
+        }
+
+        public void FlipToFront()
+        {
+            if (frontSide.activeSelf && !backSide.activeSelf) return;
+            _flipCoroutine ??= StartCoroutine(FlipRunner());
+        }
+
+        public void FlipToBack()
+        {
+            if (backSide.activeSelf && !frontSide.activeSelf) return;
             _flipCoroutine ??= StartCoroutine(FlipRunner());
         }
 
