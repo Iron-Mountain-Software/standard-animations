@@ -92,7 +92,7 @@ namespace IronMountain.StandardAnimations.RectTransforms
 
             if (backSide)
             {
-                if (force) frontSide.SetActive(!front);
+                if (force) backSide.SetActive(!front);
                 else backSide.SetActive(!backSide.activeInHierarchy);
                 if (backSide.activeInHierarchy) onBackSide?.Invoke();
             }

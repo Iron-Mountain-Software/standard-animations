@@ -19,18 +19,16 @@ namespace IronMountain.StandardAnimations.Editor.RectTransforms
         {
             if (GUILayout.Button("Flip", GUILayout.MinHeight(30)))
             {
-                _flippableRect.Flip();
+                if (_flippableRect) _flippableRect.Flip();
             }
             EditorGUILayout.BeginHorizontal();
             if (GUILayout.Button("Frontside", GUILayout.MinHeight(30)))
             {
-                if (_flippableRect.FrontSide) _flippableRect.FrontSide.SetActive(true);
-                if (_flippableRect.BackSide) _flippableRect.BackSide.SetActive(false);
+                if (_flippableRect) _flippableRect.FlipToFront();
             }
             if (GUILayout.Button("Backside", GUILayout.MinHeight(30)))
             {
-                if (_flippableRect.FrontSide) _flippableRect.FrontSide.SetActive(false);
-                if (_flippableRect.BackSide) _flippableRect.BackSide.SetActive(true);
+                if (_flippableRect) _flippableRect.FlipToBack();
             }
             EditorGUILayout.EndHorizontal();
             DrawDefaultInspector();
