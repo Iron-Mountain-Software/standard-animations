@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
@@ -24,43 +23,51 @@ namespace IronMountain.StandardAnimations.RectTransforms
         [SerializeField] private UnityEvent onBackSide;
 
         [Header("Cache")]
-        private Coroutine _flipCoroutine;
+        private bool _flipping;
 
         public GameObject FrontSide => frontSide;
         public GameObject BackSide => backSide;
-
+        
         private void Start()
         {
             if (frontSide) frontSide.SetActive(true);
             if (backSide) backSide.SetActive(false);
-            _flipCoroutine = null;
+            _flipping = false;
         }
 
         private void OnDisable()
         {
-            _flipCoroutine = null;
+            _flipping = false;
         }
 
         [ContextMenu("Flip")]
         public void Flip()
         {
-            _flipCoroutine ??= StartCoroutine(FlipRunner());
+            if (_flipping) return;
+            StartCoroutine(FlipRunner());
         }
 
         public void FlipToFront()
         {
-            if (frontSide.activeSelf && !backSide.activeSelf) return;
-            _flipCoroutine ??= StartCoroutine(FlipRunner());
+            if (!_flipping
+                && (!frontSide || frontSide.activeSelf)
+                && (!backSide || !backSide.activeSelf)) return;
+            StopAllCoroutines();
+            StartCoroutine(FlipRunner(true, true));
         }
 
         public void FlipToBack()
         {
-            if (backSide.activeSelf && !frontSide.activeSelf) return;
-            _flipCoroutine ??= StartCoroutine(FlipRunner());
+            if (!_flipping
+                && (!frontSide || !frontSide.activeSelf)
+                && (!backSide || backSide.activeSelf)) return;
+            StopAllCoroutines();
+            StartCoroutine(FlipRunner(true, false));
         }
 
-        private IEnumerator FlipRunner()
+        private IEnumerator FlipRunner(bool force = false, bool front = true)
         {
+            _flipping = true;
             float halfDuration = .1f;
         
             Quaternion startRotation = Quaternion.Euler(0, 0, 0);
@@ -78,13 +85,15 @@ namespace IronMountain.StandardAnimations.RectTransforms
 
             if (frontSide)
             {
-                frontSide.SetActive(!frontSide.activeInHierarchy);
+                if (force) frontSide.SetActive(front);
+                else frontSide.SetActive(!frontSide.activeInHierarchy);
                 if (frontSide.activeInHierarchy) onFrontSide?.Invoke();
             }
 
             if (backSide)
             {
-                backSide.SetActive(!backSide.activeInHierarchy);
+                if (force) frontSide.SetActive(!front);
+                else backSide.SetActive(!backSide.activeInHierarchy);
                 if (backSide.activeInHierarchy) onBackSide?.Invoke();
             }
             
@@ -95,7 +104,7 @@ namespace IronMountain.StandardAnimations.RectTransforms
 
             transform.rotation = startRotation;
 
-            _flipCoroutine = null;
+            _flipping = false;
         }
     }
 }
