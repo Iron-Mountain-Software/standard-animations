@@ -1,5 +1,5 @@
 # Standard Animations
-*Version: 1.2.6*
+*Version: 1.2.9*
 ## Description: 
 A library for various coded animations.
 ## Use Cases: 

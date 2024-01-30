@@ -14,6 +14,7 @@ namespace IronMountain.StandardAnimations.RectTransforms
 
         [Header("Settings")]
         [SerializeField] private Axis axis;
+        [SerializeField] private Space space = Space.World;
     
         [Header("References")]
         [SerializeField] private GameObject frontSide;
@@ -77,11 +78,11 @@ namespace IronMountain.StandardAnimations.RectTransforms
 
             for (float i = 0; i < halfDuration; i += Time.unscaledDeltaTime)
             {
-                transform.rotation = Quaternion.Lerp(startRotation, halfRotation, i / halfDuration);
+                SetRotation(Quaternion.Lerp(startRotation, halfRotation, i / halfDuration));
                 yield return null;
             }
 
-            transform.rotation = halfRotation;
+            SetRotation(halfRotation);
 
             if (frontSide)
             {
@@ -97,14 +98,24 @@ namespace IronMountain.StandardAnimations.RectTransforms
                 if (backSide.activeInHierarchy) onBackSide?.Invoke();
             }
             
-            for (float i = 0; i < halfDuration; i += Time.unscaledDeltaTime) {
-                transform.rotation = Quaternion.Lerp(halfRotation, startRotation, i / halfDuration);
+            for (float i = 0; i < halfDuration; i += Time.unscaledDeltaTime)
+            {
+                SetRotation(Quaternion.Lerp(halfRotation, startRotation, i / halfDuration));
                 yield return null;
             }
 
-            transform.rotation = startRotation;
+            SetRotation(startRotation);
 
             _flipping = false;
+        }
+
+        private void SetRotation(Quaternion rotation)
+        {
+            if (space == Space.Self)
+            {
+                transform.localRotation = rotation;
+            }
+            else transform.rotation = rotation;
         }
     }
 }
