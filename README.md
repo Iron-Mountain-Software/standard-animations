@@ -1,5 +1,5 @@
 # Standard Animations
-*Version: 1.3.0*
+*Version: 1.3.1*
 ## Description: 
 A library for various coded animations.
 ## Use Cases: 
@@ -32,6 +32,18 @@ All of the key components can be used out-of-the box, and each one is pretty str
       * public void ***Exit***()
       * public void ***EnterImmediate***()
       * public void ***Enter***()
+1. public struct **StandardAnimationGroupController**
+   * Actions: 
+      * public event Action ***OnInstanceChanged*** 
+   * Properties: 
+      * public StandardAnimationGroup ***Instance***  { get; }
+   * Methods: 
+      * public StandardAnimationGroup ***Spawn***(Transform parent)
+      * public void ***Enter***()
+      * public void ***EnterImmediate***()
+      * public void ***Exit***()
+      * public void ***ExitImmediate***()
+      * public void ***Destroy***(float delaySeconds)
 ### Aim Constraints
 1. public class **LocalAimConstraint** : MonoBehaviour
    * Properties: 
