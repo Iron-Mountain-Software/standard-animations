@@ -11,11 +11,19 @@ namespace IronMountain.StandardAnimations.RectTransforms
             Vertical,
             Horizontal
         }
+        
+        private enum Side
+        {
+            None,
+            Front,
+            Back
+        }
 
         [Header("Settings")]
         [SerializeField] private Axis axis;
         [SerializeField] private Space space = Space.World;
-    
+        [SerializeField] private Side startSide = Side.Front;
+
         [Header("References")]
         [SerializeField] private GameObject frontSide;
         [SerializeField] private GameObject backSide;
@@ -31,8 +39,17 @@ namespace IronMountain.StandardAnimations.RectTransforms
         
         private void Start()
         {
-            if (frontSide) frontSide.SetActive(true);
-            if (backSide) backSide.SetActive(false);
+            switch (startSide)
+            {
+                case Side.Front:
+                    if (frontSide) frontSide.SetActive(true);
+                    if (backSide) backSide.SetActive(false);
+                    break;
+                case Side.Back:
+                    if (frontSide) frontSide.SetActive(false);
+                    if (backSide) backSide.SetActive(true);
+                    break;
+            }
             _flipping = false;
         }
 
@@ -41,7 +58,6 @@ namespace IronMountain.StandardAnimations.RectTransforms
             _flipping = false;
         }
 
-        [ContextMenu("Flip")]
         public void Flip()
         {
             if (_flipping) return;
@@ -56,6 +72,15 @@ namespace IronMountain.StandardAnimations.RectTransforms
             StopAllCoroutines();
             StartCoroutine(FlipRunner(true, true));
         }
+        
+        public void FlipToFrontImmediate()
+        {
+            StopAllCoroutines();
+            if (frontSide) frontSide.SetActive(true);
+            if (backSide) backSide.SetActive(false);
+            onFrontSide?.Invoke();
+            SetRotation(Quaternion.Euler(0, 0, 0));
+        }
 
         public void FlipToBack()
         {
@@ -64,6 +89,16 @@ namespace IronMountain.StandardAnimations.RectTransforms
                 && (!backSide || backSide.activeSelf)) return;
             StopAllCoroutines();
             StartCoroutine(FlipRunner(true, false));
+            _flipping = false;
+        }
+        
+        public void FlipToBackImmediate()
+        {
+            StopAllCoroutines();
+            if (frontSide) frontSide.SetActive(false);
+            if (backSide) backSide.SetActive(true);
+            onBackSide?.Invoke();
+            SetRotation(Quaternion.Euler(0, 0, 0));
         }
 
         private IEnumerator FlipRunner(bool force = false, bool front = true)

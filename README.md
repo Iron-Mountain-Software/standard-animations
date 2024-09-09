@@ -1,5 +1,5 @@
 # Standard Animations
-*Version: 1.3.1*
+*Version: 1.3.3*
 ## Description: 
 A library for various coded animations.
 ## Use Cases: 
@@ -39,6 +39,19 @@ All of the key components can be used out-of-the box, and each one is pretty str
       * public StandardAnimationGroup ***Instance***  { get; }
    * Methods: 
       * public StandardAnimationGroup ***Spawn***(Transform parent)
+      * public void ***Enter***()
+      * public void ***EnterImmediate***()
+      * public void ***Exit***()
+      * public void ***ExitImmediate***()
+      * public void ***Destroy***(float delaySeconds)
+1. public struct **StandardAnimationGroupControllerTemplated`1**
+   * Actions: 
+      * public event Action ***OnInstanceChanged*** 
+   * Properties: 
+      * public T ***Instance***  { get; }
+      * public StandardAnimationGroup ***AnimationGroup***  { get; }
+   * Methods: 
+      * public T ***Spawn***(Transform parent)
       * public void ***Enter***()
       * public void ***EnterImmediate***()
       * public void ***Exit***()
@@ -136,7 +149,9 @@ All of the key components can be used out-of-the box, and each one is pretty str
    * Methods: 
       * public void ***Flip***()
       * public void ***FlipToFront***()
+      * public void ***FlipToFrontImmediate***()
       * public void ***FlipToBack***()
+      * public void ***FlipToBackImmediate***()
 1. public struct **Padding**
    * Properties: 
       * public float ***Top***  { get; }

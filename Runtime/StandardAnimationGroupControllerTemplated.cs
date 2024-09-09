@@ -5,7 +5,7 @@ using Object = UnityEngine.Object;
 namespace IronMountain.StandardAnimations
 {
     [Serializable]
-    public struct StandardAnimationGroupTest<T> where T : MonoBehaviour
+    public struct StandardAnimationGroupControllerTemplated<T> where T : MonoBehaviour
     {
         public event Action OnInstanceChanged;
         
